@@ -70,16 +70,47 @@ Model Car::getModel() const
 	return model; // Test2a.cpp getModel().display() donc retour par valeur
 }
 
+// Ajout d'une option à la voiture
+void Car::addOption(Option *opt)
+{
+    if (opt)
+    {
+        options.push_back(opt);
+    }
+}
 
-// Methode Display
+// Suppression d'une option par son code
+void Car::removeOption(const string &code) {
+    for (auto it = options.begin(); it != options.end(); ++it)
+    {
+        if ((*it)->getCode() == code)
+        {
+            options.erase(it);
+            break;
+        }
+    }
+}
+
+// Calcule le prix total
+float Car::getPrice() const
+{
+    float total = model.getBasePrice();  // récupère le prix du modèle
+    for (const auto &opt : options)
+        total += opt.getPrice();         // ajoute le prix de chaque option
+    return total;
+}
+
+// Affiche les informations complètes de la voiture
 void Car::display() const
 {
-	 //afficher les information objet car complet
-	cout << "=== Projet de voiture ===" << endl;
-	cout << "Nom du projet : " << endl;
+    cout << "Voiture : " << name << endl;
+    cout << "Modèle  : " << model.getName() << " (" << model.getBasePrice() << " €)" << endl;
+    cout << "Options :" << endl;
 
-	//affichage des caractéristique du model associé
-	cout << "Modèle associé : " << endl;
-	model.display(); //appel dans la classe model
 
+    for (auto opt : options)
+    {
+        opt->display();
+    }
+    cout << "Prix total : " << getPrice() << " €" << endl;
 }

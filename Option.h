@@ -18,8 +18,8 @@ private:
 
 public:
 	Option();
-	Option(const string &c,const string& l, float p);
-	Option(const Option& o);
+	Option(const string &c,const string &l, float p);
+	Option(const Option &o);
 	~Option();
 
 	//SETTER

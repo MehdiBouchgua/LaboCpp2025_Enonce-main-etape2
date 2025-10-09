@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Model.h"
 #include "Option.h"
 
@@ -17,6 +18,7 @@ class Car {
 private:
 	string name; //nom du projet voiture
 	Model model; //Modele de base
+	vector<Option> options;
 
 public:
 	Car();
@@ -32,7 +34,12 @@ public:
 	string getName() const;
 	Model getModel() const;
 
-	void display() const;
+	// Gestion des options
+	void addOption(const Option &opt);               // Ajoute une option à la voiture
+	void removeOption(const string &code);     // Supprime une option via son code
+	double getPrice() const;              // Prix total du modèle + options
+	void display() const;                      // Affiche les infos de la voiture
+
 
 
 };
