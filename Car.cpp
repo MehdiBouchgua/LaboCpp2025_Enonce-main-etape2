@@ -1,6 +1,7 @@
 /*** Car.cpp ***/ 
 
 #include "Car.h"
+#include "Option.h"
 #include <string.h>
 #include <iostream>
 

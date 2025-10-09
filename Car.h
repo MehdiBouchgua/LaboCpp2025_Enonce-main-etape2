@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "Model.h"
+#include "Option.h"
 
 using namespace std; // permet d'utiliser cout direment et non stdcout
 

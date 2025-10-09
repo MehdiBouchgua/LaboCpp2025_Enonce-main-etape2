@@ -3,8 +3,11 @@
 #define OPTION_H
 
 #include <iostream>
+#include <string>
 using namespace std; // permet d'utiliser cout direment et non stdcout
 /*#include "cstream"*/
+
+namespace carconfig {
 
 class Option {
 
@@ -15,7 +18,7 @@ private:
 
 public:
 	Option();
-	Option(string &c, string& l, float p)
+	Option(const string &c,const string& l, float p);
 	Option(const Option& o);
 	~Option();
 
@@ -35,5 +38,7 @@ public:
 
 
 };
+
+}
 
 #endif
