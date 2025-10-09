@@ -37,7 +37,7 @@ public:
 	// Gestion des options
 	void addOption(const Option &opt);               // Ajoute une option à la voiture
 	void removeOption(const string &code);     // Supprime une option via son code
-	double getPrice() const;              // Prix total du modèle + options
+	float getPrice() const;              // Prix total du modèle + options
 	void display() const;                      // Affiche les infos de la voiture
 
 
