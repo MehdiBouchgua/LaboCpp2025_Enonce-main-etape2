@@ -10,12 +10,16 @@ using namespace carconfig;
 
 /******** Constructeur par defaut ********/
 
-Car::Car() {
+Car::Car() : name("Projet_208GTI_MrDugenou"), model("208 GTi 1.6", 200, Engine::Petrol, 34100.0f) //default model
+{
+    
+}
+/*Car::Car() {
 	cout << ">>> Car = constructeur par defaut" << endl;
-	name = "Projet_sans_nom"; //
+	name = "Projet Ford GT"; //
 	Model m; //model par defaut
 	setModel(m); // assignation de ce modele a la voiture a l'aide du setter
-}
+}*/
 
 // Constructeur d'initialisation
 
@@ -52,9 +56,12 @@ void Car::setName(const string &n)
 	name = n; //affectation directe de la valeur passé en parametre a l'attribut privé "string name"
 }
 
-void Car::setModel(const Model &m)
+void Car::setModel(Model m)
 {
-	model = m; //On recopie le model passé en paramètre
+	model.setName(m.getName());
+    model.setPower(m.getPower());
+    model.setEngine(m.getEngine());
+    model.setBasePrice(m.getBasePrice()); //On recopie le model passé en paramètre
 }
 
 
@@ -70,47 +77,91 @@ Model Car::getModel() const
 	return model; // Test2a.cpp getModel().display() donc retour par valeur
 }
 
-// Ajout d'une option à la voiture
-void Car::addOption(Option *opt)
+/* ========================================================
+   addOption
+   Ajoute une option à la voiture si elle n'existe pas déjà
+   ======================================================== */
+void Car::addOption(const Option &option)
 {
-    if (opt)
+    for(int i=0; i<5; i++)
     {
-        options.push_back(opt);
-    }
-}
-
-// Suppression d'une option par son code
-void Car::removeOption(const string &code) {
-    for (auto it = options.begin(); it != options.end(); ++it)
-    {
-        if ((*it)->getCode() == code)
+        
+        if(options[i] == nullptr)
         {
-            options.erase(it);
-            break;
+            options[i] = new Option(option);
+            return;
         }
     }
 }
 
-// Calcule le prix total
+/* ========================================================
+   removeOption
+   Supprime une option du vector via son code
+   ======================================================== */
+void Car::removeOption(const string &code)
+{
+    bool found = false;
+
+    for (int i = 0; i < (int)options.size(); i++)
+    {
+        if (options[i]->getCode() == code)
+        {
+            // On supprime l'élément trouvé
+            options.erase(options.begin() + i);
+            cout << "Option " << code << " supprimée." << endl;
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        cout << "[INFO] Option " << code << " introuvable." << endl;
+    }
+}
+
+
+/* ========================================================
+   getPrice
+   Calcule le prix total (modèle + options)
+   ======================================================== */
 float Car::getPrice() const
 {
-    float total = model.getBasePrice();  // récupère le prix du modèle
-    for (const auto &opt : options)
-        total += opt.getPrice();         // ajoute le prix de chaque option
+    float total = model.getBasePrice(); // Prix de base du modèle
+
+    // On additionne le prix de chaque option
+    for (int i = 0; i < (int)options.size(); i++)
+    {
+        total += options[i]->getPrice();
+    }
+
     return total;
 }
 
-// Affiche les informations complètes de la voiture
+/* ========================================================
+   display
+   Affiche le modèle, les options et le prix total
+   ======================================================== */
 void Car::display() const
 {
-    cout << "Voiture : " << name << endl;
-    cout << "Modèle  : " << model.getName() << " (" << model.getBasePrice() << " €)" << endl;
-    cout << "Options :" << endl;
+    cout << "=== VOITURE ===" << endl;
+    cout << "Nom : " << name << endl;
 
+    cout << "--- Modele ---" << endl;
+    model.display();
 
-    for (auto opt : options)
+    cout << "--- Options ---" << endl;
+    if (options.empty())
     {
-        opt->display();
+        cout << "Aucune option." << endl;
     }
+    else
+    {
+        for (int i = 0; i < (int)options.size(); i++)
+        {
+            options[i]->display();
+        }
+    }
+
     cout << "Prix total : " << getPrice() << " €" << endl;
 }

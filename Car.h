@@ -18,7 +18,7 @@ class Car {
 private:
 	string name; //nom du projet voiture
 	Model model; //Modele de base
-	vector<Option> options;
+	vector<const Option*> options;
 
 public:
 	Car();
@@ -28,14 +28,14 @@ public:
 
 	//SETTERS
 	void setName(const string &n);
-	void setModel(const Model &m);
+	void setModel(Model m);
 
 	//GETTERS
 	string getName() const;
 	Model getModel() const;
 
 	// Gestion des options
-	void addOption(const Option &opt);               // Ajoute une option à la voiture
+	void addOption(const Option &option);               // Ajoute une option à la voiture
 	void removeOption(const string &code);     // Supprime une option via son code
 	float getPrice() const;              // Prix total du modèle + options
 	void display() const;                      // Affiche les infos de la voiture
